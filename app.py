@@ -1,10 +1,10 @@
 import os
 import requests
 from flask import Flask, request, jsonify, send_from_directory
-
-# from versioning.versioning import VersionUtil
+from versioning.versioning import VersionUtil
 
 model_service = os.environ["MODEL_SERVICE_URL"]
+version_util = VersionUtil()
 
 
 app = Flask(__name__)
@@ -22,10 +22,9 @@ def predict():
     return jsonify(prediction)
 
 
-@app.route("/version")
+@app.route("/version", methods=["GET"])
 def version():
-    return jsonify("0.0.0?")
-    # return VersionUtil().version
+    return jsonify(version_util.version)
 
 
 if __name__ == "__main__":

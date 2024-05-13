@@ -7,7 +7,7 @@
   </head>
   <body>
     <h1>Phishing Prediction</h1>
-
+    <p id="version"></p>
     <input type="text" name="input" placeholder="Enter phishy URL here" />
     <button type="submit">Predict</button>
     <pre></pre>
@@ -16,6 +16,15 @@
       const input = document.querySelector("input");
       const button = document.querySelector("button");
       const output = document.querySelector("pre");
+      const version = document.querySelector("#version");
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        const response = await fetch("/version", {
+          method: "GET",
+        });
+        const json = await response.json();
+        version.textContent = "Version of lib-version: " + JSON.stringify(json, null, 2);
+      });
 
       button.addEventListener("click", async () => {
         const response = await fetch("/predict", {
