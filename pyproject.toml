@@ -9,7 +9,7 @@ readme = "README.md"
 python = "^3.11"
 flask = "^3.0.3"
 requests = "^2.31.0"
-# remla24-team7-libversion = { git = "https://github.com/remla24-team7/lib-version.git", branch = "automatic-versioning" }
+remla24-team7-libversion = "^0.0.1"
 
 [build-system]
 requires = ["poetry-core"]

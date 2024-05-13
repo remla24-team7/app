@@ -1,0 +1,54 @@
+name: Publish App
+
+on:
+  push:
+    tags:
+     - '*'
+
+jobs:
+  build-and-publish:
+    name: Build and publish app
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python 3.12
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.12'
+
+    - name: Extract version tag from git tag
+      id: tag
+      if: startsWith(github.ref, 'refs/tags/v')
+      run: echo "::set-output name=TAG_NAME::${GITHUB_REF#refs/tags/v}"
+
+    - name: Update setup.py version information
+      if: steps.tag.outputs.TAG_NAME
+      run: sed -i "s/{{VERSION_PLACEHOLDER}}/${{ steps.tag.outputs.TAG_NAME }}/g" setup.py
+
+    - name: Install Poetry
+      run: curl -sSL https://install.python-poetry.org | python3 -
+
+    - name: Configure Poetry
+      run: poetry config virtualenvs.create false
+
+    - name: Check for lock file consistency
+      run: poetry lock --check || poetry lock --no-update
+
+    - name: Install dependencies
+      run: poetry install
+
+    - name: Install pypa/setuptools
+      run: >-
+        python -m
+        pip install setuptools wheel
+
+    - name: Build package
+      run: python setup.py sdist bdist_wheel
+
+    - name: Publish package to PyPI
+      run:  |
+          pip install build twine
+          python -m build
+          python -m twine upload dist/* --skip-existing -u __token__ -p ${{ secrets.PYPI_API_TOKEN }} --verbose
