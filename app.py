@@ -17,9 +17,8 @@ def index():
 
 @app.route("/predict", methods=["POST"])
 def predict():
-    input = request.json["input"]
-    response = requests.post(f"{model_service}/predict", json=input)
-    prediction = response.json()
+    model_response = requests.post(f"{model_service}/predict", json=request.json)
+    prediction = model_response.json()
     return jsonify(prediction)
 
 
@@ -30,4 +29,4 @@ def version():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", debug=True)
+    app.run(host="0.0.0.0", port=os.getenv("PORT"), debug=True)
