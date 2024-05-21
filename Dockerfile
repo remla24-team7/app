@@ -15,4 +15,4 @@ COPY . ./
 
 EXPOSE 5000
 
-CMD ["python", "-m", "app"]
+CMD ["python", "-m", "remla24_team7_app.app"]
