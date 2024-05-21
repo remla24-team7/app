@@ -9,15 +9,20 @@
     <h1>Phishing Prediction</h1>
     <p id="version"></p>
     <input type="text" name="input" placeholder="Enter phishy URL here" />
-    <button type="submit">Predict</button>
-    <pre></pre>
+    <button type="submit" id="predict-button">Predict</button>
+    <pre id="output"></pre>
+    <button type="button" id="agree-button" style="display:none;">Agree</button>
+    <button type="button" id="disagree-button" style="display:none;">Disagree</button>
 
     <script>
       const input = document.querySelector("input");
-      const button = document.querySelector("button");
-      const output = document.querySelector("pre");
+      const predictButton = document.querySelector("#predict-button");
+      const output = document.querySelector("#output");
       const version = document.querySelector("#version");
+      const agreeButton = document.querySelector("#agree-button");
+      const disagreeButton = document.querySelector("#disagree-button");
 
+      // Fetch the version of the library when the document is fully loaded
       document.addEventListener("DOMContentLoaded", async () => {
         const response = await fetch("/version", {
           method: "GET",
@@ -26,7 +31,8 @@
         version.textContent = "Version of lib-version: " + JSON.stringify(json, null, 2);
       });
 
-      button.addEventListener("click", async () => {
+      // Handle the click event on the Predict button
+      predictButton.addEventListener("click", async () => {
         const response = await fetch("/predict", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -34,6 +40,22 @@
         });
         const json = await response.json();
         output.innerHTML = JSON.stringify(json, null, 2);
+        agreeButton.style.display = "inline";
+        disagreeButton.style.display = "inline";
+      });
+
+      // Handle the click event on the Agree button
+      agreeButton.addEventListener("click", () => {
+        alert("You agreed with the prediction.");
+        agreeButton.style.display = "none";
+        disagreeButton.style.display = "none";
+      });
+
+      // Handle the click event on the Disagree button
+      disagreeButton.addEventListener("click", () => {
+        alert("You disagreed with the prediction.");
+        agreeButton.style.display = "none";
+        disagreeButton.style.display = "none";
       });
     </script>
   </body>
