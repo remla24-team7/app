@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 
 setup(
-    name="remla24-team7-libversion",
+    name="remla24-team7-app",
     version='{{VERSION_PLACEHOLDER}}',
     url='https://github.com/remla24-team7/app',
     author='Arjun Vilakathara',
