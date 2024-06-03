@@ -2,12 +2,14 @@ import os
 import requests
 from flask import Flask, request, jsonify, send_from_directory
 from versioning.versioning import VersionUtil
+from prometheus_flask_exporter import PrometheusMetrics
 
 model_service = os.environ["MODEL_SERVICE_URL"]
 version_util = VersionUtil()
 
-
 app = Flask(__name__)
+metrics = PrometheusMetrics(app)
+metrics.info('app_frontend_info', 'Application frontend info', version='1.0.0')
 
 
 @app.route("/")
@@ -25,6 +27,18 @@ def predict():
 @app.route("/version", methods=["GET"])
 def version():
     return jsonify(version_util.version)
+
+
+@app.route("/agree", methods=["POST"])
+def agree():
+    _ = requests.post(f"{model_service}/agree")
+    return jsonify("")
+
+
+@app.route("/disagree", methods=["POST"])
+def disagree():
+    _ = requests.post(f"{model_service}/disagree")
+    return jsonify("")
 
 
 if __name__ == "__main__":

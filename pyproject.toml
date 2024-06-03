@@ -10,6 +10,7 @@ python = "^3.11"
 flask = "^3.0.3"
 requests = "^2.31.0"
 remla24-team7-libversion = "^0.0.1"
+prometheus-flask-exporter = "^0.23.0"
 
 [build-system]
 requires = ["poetry-core"]
