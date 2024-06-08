@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "remla24_team7_app"
+name = "app"
 version = "0.1.0"
 description = "app"
 authors = []

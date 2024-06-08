@@ -1,18 +1,17 @@
-FROM python:3.12-slim
+FROM python:3.11-slim
 
 ENV POETRY_VERSION=1.8.2
+
+RUN pip install poetry==${POETRY_VERSION}
 
 WORKDIR /app
 
 COPY pyproject.toml poetry.lock ./
+RUN poetry install --no-root --no-interaction --only main
 
-RUN pip install poetry==${POETRY_VERSION} \
-  && poetry config virtualenvs.create false \
-  && poetry lock --no-update \
-  && poetry install --no-interaction --no-dev
-
-COPY . ./
+COPY src README.md ./
+RUN poetry install --only-root --no-interaction
 
 EXPOSE 5000
 
-CMD ["python", "-m", "remla24_team7_app.app"]
+CMD ["poetry", "run", "python", "-m", "app"]
