@@ -11,14 +11,20 @@ version_util = VersionUtil()
 
 app = Flask(__name__)
 metrics = PrometheusMetrics(app)
-metrics.info('app_frontend_info', 'Application frontend info', version='1.0.0')
-views_counter = prometheus_client.Counter('views_counter', 'Number of times website has been loaded')
-requests_counter = prometheus_client.Counter('requests_counter', 'Number of requests')
-agree_counter = prometheus_client.Counter('agree_counter', 'Number of times users agree with the result')
-disagree_counter = prometheus_client.Counter('disagree_counter', 'Number of times users disagree with the result')
-legitimate_counter = prometheus_client.Counter('legitimate_counter', 'Number of legitimate URLs')
-phishing_counter = prometheus_client.Counter('phishing_counter', 'Number of phishing URLs')
-predict_time_histogram = prometheus_client.Histogram('predict_time_histogram', 'Time taken for prediction')
+metrics.info('appv1_frontend_info', 'Application frontend info', version='1.0.0')
+views_counter = prometheus_client.Counter('views_counter', 'Number of times website has been loaded',
+                                          ['version1'])
+requests_counter = prometheus_client.Counter('requests_counter', 'Number of requests', ['version1'])
+agree_counter = prometheus_client.Counter('agree_counter', 'Number of times users agree with the result',
+                                          ['version1'])
+disagree_counter = prometheus_client.Counter('disagree_counter', 'Number of times users disagree with the result',
+                                             ['version1'])
+legitimate_counter = prometheus_client.Counter('legitimate_counter', 'Number of legitimate URLs',
+                                               ['version1'])
+phishing_counter = prometheus_client.Counter('phishing_counter', 'Number of phishing URLs',
+                                             ['version1'])
+predict_time_histogram = prometheus_client.Histogram('predict_time_histogram', 'Time taken for prediction',
+                                                     ['version1'])
 
 
 @app.route("/")
