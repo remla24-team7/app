@@ -29,7 +29,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          VERSION=$(poetry version --short)
+          VERSION=$(poetry version --short)-beta
           gh release create "v$VERSION" --target ${{ github.ref_name }} --generate-notes
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
 
