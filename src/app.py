@@ -12,19 +12,13 @@ version_util = VersionUtil()
 app = Flask(__name__)
 metrics = PrometheusMetrics(app)
 metrics.info('appv1_frontend_info', 'Application frontend info', version='1.0.0')
-app1_views_counter = prometheus_client.Counter('views_counter', 'Number of times website has been loaded',
-                                               ['version1'])
-app1_requests_counter = prometheus_client.Counter('requests_counter', 'Number of requests', ['version1'])
-app1_agree_counter = prometheus_client.Counter('agree_counter', 'Number of times users agree with the result',
-                                               ['version1'])
-app1_disagree_counter = prometheus_client.Counter('disagree_counter', 'Number of times users disagree with the result',
-                                                  ['version1'])
-app1_legitimate_counter = prometheus_client.Counter('legitimate_counter', 'Number of legitimate URLs',
-                                                    ['version1'])
-app1_phishing_counter = prometheus_client.Counter('phishing_counter', 'Number of phishing URLs',
-                                                  ['version1'])
-app1_predict_time_histogram = prometheus_client.Histogram('predict_time_histogram', 'Time taken for prediction',
-                                                          ['version1'])
+app1_views_counter = prometheus_client.Counter('app1_views_counter', 'Number of times website has been loaded')
+app1_requests_counter = prometheus_client.Counter('app1_requests_counter', 'Number of requests')
+app1_agree_counter = prometheus_client.Counter('app1_agree_counter', 'Number of times users agree with the result')
+app1_disagree_counter = prometheus_client.Counter('app1_disagree_counter', 'Number of times users disagree with the result')
+app1_legitimate_counter = prometheus_client.Counter('app1_legitimate_counter', 'Number of legitimate URLs')
+app1_phishing_counter = prometheus_client.Counter('app1_phishing_counter', 'Number of phishing URLs')
+app1_predict_time_histogram = prometheus_client.Histogram('app1_predict_time_histogram', 'Time taken for prediction')
 
 
 @app.route("/")
