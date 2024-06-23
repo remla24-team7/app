@@ -37,12 +37,8 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ghcr.io/${{ github.repository }}/appv2
-          tags: |
-            type=semver,pattern={{version}}
-            type=sha,prefix=commit-
-            type=ref,event=branch,prefix=branch-
-            type=static,value=latest
+          images: ghcr.io/${{ github.repository }}-v2
+          tags: ${{ steps.release.outputs.VERSION }}
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
